@@ -37,6 +37,7 @@ typedef struct Control {
   const char *label;
   void (*callback)(Control, int);
   String value;
+  String css;
   unsigned int color;
 } Control;
 
@@ -48,6 +49,7 @@ typedef struct Control {
 #define UPDATE_LABEL 6
 
 #define UI_BUTTON 2
+#define UPDATE_BUTTON 17
 
 #define UI_SWITCHER 3
 #define UPDATE_SWITCHER 7
@@ -67,6 +69,9 @@ typedef struct Control {
 #define UI_GRAPH 14
 #define CLEAR_GRAPH 15
 #define ADD_GRAPH_POINT 16
+
+
+
 
 // Values
 #define B_DOWN -1
@@ -98,7 +103,7 @@ typedef struct Control {
 #define COLOR_SUNFLOWER 4
 #define COLOR_CARROT 5
 #define COLOR_ALIZARIN 6
-#define COLOR_NONE 7
+#define COLOR_NONE 6
 
 class ESPUIClass {
  public:
@@ -106,35 +111,29 @@ class ESPUIClass {
   void begin(const char *_title, const char *username, const char *password);
 
   void beginSPIFFS(const char *_title);  // Setup servers and page in SPIFFSmode
-  void beginSPIFFS(const char *_title, const char *username,
-                   const char *password);
+  void beginSPIFFS(const char *_title, const char *username, const char *password);
 
-  void prepareFileSystem();  // Initially preps the filesystem and loads a lot
-                             // of stuff into SPIFFS
+  void prepareFileSystem();  // Initially preps the filesystem and loads a lot of stuff into SPIFFS
   void list();
+  
   // Creating Elements
-
-  int button(const char *label, void (*callBack)(Control, int), int color,
-             String value = "");  // Create Event Button
-  int switcher(const char *label, bool startState,
-               void (*callBack)(Control, int),
-               int color);  // Create Toggle Button
-  int pad(const char *label, bool centerButton, void (*callBack)(Control, int),
-          int color);  // Create Pad Control
-  int slider(const char *label, void (*callBack)(Control, int), int color,
-             String value);  // Create Slider Control
-  int number(const char *label, void (*callBack)(Control, int), int color,
-             int number, int min, int max);  // Create a Number Input Control
-  int text(const char *label, void (*callBack)(Control, int), int color,
-           String value = "");  // Create a Text Input Control
+  int button(char *label, void (*callBack)(Control, int), int color, String btnText, String css = "");  // Create Event Button
+  int switcher(const char *label, bool startState, void (*callBack)(Control, int), int color);  // Create Toggle Button
+  int pad(const char *label, bool centerButton, void (*callBack)(Control, int), int color);  // Create Pad Control
+  int slider(const char *label, void (*callBack)(Control, int), int color, String value);  // Create Slider Control
+  int number(const char *label, void (*callBack)(Control, int), int color, int number, int min, int max);  // Create a Number Input Control
+  int text(const char *label, void (*callBack)(Control, int), int color, String value = "");  // Create a Text Input Control
 
   // Output only
-  int label(const char *label, int color, String value = "");  // Create Label
-  int graph(const char *label, int color);  // Create Graph display
+  int label(const char *label, int color, String value = "", String css = "");  // Create Label
+  int graph(const char *label, int color);  // Create Graph display 
 
   // Update Elements
   void print(int id, String value);
   void print(String label, String value);
+  
+  // Example for update label & text of a button
+  void printButton(int id, String label, String button); 
 
   void updateSwitcher(int id, bool nValue, int clientId = -1);
   void updateSwitcher(String label, bool nValue, int clientId = -1);
@@ -157,7 +156,7 @@ class ESPUIClass {
   void textThem(String text, int clientId);
 
   // Variables ---
-  const char *ui_title = "ESPUI";  // Store UI Title and Header Name
+  const char *ui_title = "ESPUI";  // Store UI Title and Header Name  
   int cIndex = 0;                  // Control index
   Control *controls[25];
   void jsonDom(AsyncWebSocketClient *client);
