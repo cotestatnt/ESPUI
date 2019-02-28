@@ -46,7 +46,7 @@ void updateESPUI(){
     ESPUI.printButton(idCancello, "Cancello APERTO", "CHIUDI");             
   } 
   else{        
-    ESPUI.print("Stato Cancello", " CHIUSO");  
+    ESPUI.print("Stato attuale cancello", " CHIUSO");  
     ESPUI.printButton(idCancello, "Cancello CHIUSO",  "APRI");               
   }
   
@@ -55,7 +55,7 @@ void updateESPUI(){
     ESPUI.printButton(idBasculante, "Basculante APERTA", "CHIUDI");             
   } 
   else{        
-    ESPUI.print("Stato Basculante", " CHIUSA");  
+    ESPUI.print("Stato attuale basculante", " CHIUSA");  
     ESPUI.printButton(idBasculante, "Basculante CHIUSA",  "APRI");               
   }  
 }
