@@ -5,8 +5,8 @@
 time_t now;
 struct tm lt;
 
-const char *ssid = "PuccosNET";
-const char *password = "Tole76tnt";
+const char *ssid = "SSID";
+const char *password = "password";
 unsigned long updateTime = 0;
 const int outCancello = D4;
 const int outBasculante = D5;
